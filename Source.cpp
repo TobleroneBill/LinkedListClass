@@ -205,18 +205,37 @@ int main() {
 	//funi->PrintList();
 	//std::cout << funi->ToLong()<<std::endl;
 
-	std::cout << LinkedList::AddAsList(2, 3) << std::endl;;
-	std::cout<< LinkedList::SubtractAsList(2, 3) << std::endl;;
-	std::cout << LinkedList::MultiplyAsList(2, 3) << std::endl;;
+	std::cout << LinkedList::AddAsListI(2, 3) << std::endl;;
+	std::cout<< LinkedList::SubtractAsListI(2, 3) << std::endl;;
+	std::cout << LinkedList::MultiplyAsListI(2, 3) << std::endl;;
 
-	std::cout << LinkedList::AddAsList(123,4444) << std::endl;;
-	std::cout << LinkedList::SubtractAsList(123, 2) << std::endl;;
-	std::cout << LinkedList::MultiplyAsList(666, 420) << std::endl;;
+	std::cout << LinkedList::AddAsListI(123,4444) << std::endl;;
+	std::cout << LinkedList::SubtractAsListI(123, 2) << std::endl;;
+	std::cout << LinkedList::MultiplyAsListI(666, 420) << std::endl;;
 
+	LinkedList* addList = LinkedList::AddAsList(100, 230);
+	LinkedList* subList = LinkedList::SubtractAsList(100, 230);
+	LinkedList* MultiList = LinkedList::MultiplyAsList(100, 230);
 
+	addList->PrintList();
+	PrintLine();
+	subList->PrintList();
+	PrintLine();
+	MultiList->PrintList();
+	PrintLine();
 
-	
+	std::cout << addList->ToInt() << std::endl;;
+	std::cout << subList->ToInt() << std::endl;;
+	std::cout << MultiList->ToInt() << std::endl;;
 
+	addList->SelectSort();
+	subList->SelectSort();
+	MultiList->SelectSort();
+
+	PrintLine();
+	addList->Combine_S(subList);
+	addList->PrintList();
+	std::cout<< "Size: " << addList->GetSize();
 	system("pause");
 	return 0;
 }
