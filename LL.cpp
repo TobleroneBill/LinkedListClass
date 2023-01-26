@@ -15,6 +15,7 @@
 LinkedList::LinkedList(){
 	Size = 0;
 	HeadNode = new intListNode;
+	base = 10;
 }
 
 intListNode* LinkedList::GetHeadPointer() {
@@ -169,6 +170,55 @@ void LinkedList::ApplyFunc(int (*func)(int,int)) {
 	}
 }
 
+// Can only do 10-2, because otherwise we need to add letters, which cant be done in an int.
+// Could make a string list representation, but think that would need to have its own conversion method.
+void LinkedList::UpdateBase(int newbase) {
+	if (newbase > 10 || newbase < 2) { std::cout << "invalid Range (2-10)\n"; return; }
+	int oldbase = base;
+	intListNode* ptr = GetHeadPointer();
+	// if new base is less than the oldbase, Divide
+	if (newbase < oldbase) {
+		while (ptr) {
+			LinkedList* finalVal = new LinkedList;
+			int temp = ptr->Value;
+			// need to turn each digit into a part of a list, and then reverse it so it can include 0 values)
+			//take each digit in its sequence and multiply by digit * base^digit position
+			while (temp!=0) {
+				int next = temp / newbase; // get quotient
+				int nextMod = temp % newbase; // get remainder 
+				finalVal->Append(nextMod);
+				temp = next;
+			}
+			// complicated list based way of reversing a number lol
+			finalVal->ReverseList();	// reverse number
+			ptr->Value = finalVal->ToInt();	// turn number as list back into int
+			ptr = ptr->next;
+			base = newbase;
+			delete finalVal;
+		}
+	}
+	// multiply
+	// Get number of digits, and for each one, total += currentDigi*(original base^current digit)
+	else {
+		while (ptr) {
+			LinkedList* numberList = LinkedList::NumToList(ptr->Value);
+			intListNode* numberNode = numberList->GetHeadPointer();
+			int digit = numberList->GetSize()-1;	//think this needs -1, because the way stuff is indexed
+			int total = 0;
+			while (numberNode)
+			{
+				int newVal = numberNode->Value * (std::pow(oldbase, digit));
+				digit--;
+				total += newVal;
+				numberNode = numberNode->next;
+			}
+
+			ptr->Value = total;
+			ptr = ptr->next;
+		}
+	}
+}
+
 // Adds 1 list to another (l1 + l2 e.g 1a,1b,1c + 2a,2b,2c = 1a,1b,1c,2a,2b,2c).
 void LinkedList::Combine(LinkedList* l2) {
 	intListNode* l1ptr = GetHeadPointer();
@@ -216,7 +266,7 @@ void LinkedList::Combine_A(LinkedList* l2) {
 	
 }
 
-
+// For below
 void LinkedList::Insert(intListNode * l1ptr, intListNode * l2ptr) {
 	//l1 is bigger than l2 ALWAYS
 	
@@ -275,12 +325,13 @@ void LinkedList::Combine_S(LinkedList* l2) {
 	intListNode* l2ptr = l2->GetHeadPointer();
 
 	// checks which list is bigger, and uses that one as the base
-	Insert(l1, l2ptr);
+	// Insert(l1, l2ptr);
 	
 
 	if(l1->Value > l2ptr->Value){	Insert(l1, l2ptr);}
 	else {	Insert(l2ptr,l1);}
 
+	// Recaluclate size
 	int size = 0;
 	l1 = GetHeadPointer();
 
@@ -662,15 +713,12 @@ LinkedList::~LinkedList() {
 	intListNode* ptr = GetHeadPointer();
 	intListNode* nextptr = ptr;
 	
-	std::cout << "Deleting items: " << std::endl;
 	while (nextptr) {
 		ptr = nextptr;
 		nextptr = nextptr->next;
-		// delete the item
 		delete ptr;
 	}
 
-	std::cout << "Deleting self: " << std::endl;
 }
 
 
@@ -711,6 +759,8 @@ void StringList::PrintList() {
 	std::cout << "]\n";
 
 }
+
+
 
 // Adds an input to the linked list, with each element split by whitespace. Uses Regex, and is more needlessly
 // complicated than python regex

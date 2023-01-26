@@ -236,6 +236,23 @@ int main() {
 	addList->Combine_S(subList);
 	addList->PrintList();
 	std::cout<< "Size: " << addList->GetSize();
+	PrintLine();
+
+	//LinkedList* baseList = new LinkedList();
+	LinkedList* baseList = LinkedList::RandomList(10);
+
+	baseList->Append(55);
+	PrintLine();
+	baseList->PrintList();
+	PrintLine();
+	baseList->UpdateBase(2);
+	baseList->PrintList();
+	PrintLine();
+	baseList->UpdateBase(10);
+	baseList->PrintList();
+
+	// to base 10 and back
+
 	system("pause");
 	return 0;
 }

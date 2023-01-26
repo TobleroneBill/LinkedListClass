@@ -16,6 +16,7 @@ struct intListNode {
 class LinkedList {
 	int Size = 0;
 	intListNode* HeadNode;
+	int base = 10;
 
 	// For use in sort combine (private so it cant be easily accessed
 	void Insert(intListNode* l1ptr, intListNode* l2ptr);
@@ -52,6 +53,9 @@ public:
 	
 	// Lets user defined function be used on every element of the list. needs pointer to function adress
 	void ApplyFunc(int (*func)(int, int));
+
+	//Upadtes which base system the list is using 
+	void UpdateBase(int newbase);
 
 	// Adds 1 list to another (l1 + l2, not l2+l1. e.g 1a,1b,1c + 2a,2b,2c = 1a,1b,1c,2a,2b,2c)
 	void Combine(LinkedList* l2);
