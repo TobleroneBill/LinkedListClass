@@ -286,6 +286,58 @@ void LinkedList::UpdateBase(int newbase) {
 	base = newbase;
 }
 
+// Right:
+// Move head pointer by size, then set the previous values to be on the end of the list
+// Left:
+// We are moving the end to the start. end positions Listsize-input size. Then we move ptr up to that position
+// and set its next to null and move each one after to the start (so we will need to keep track of that).
+void LinkedList::Rotate(int size, bool right) {
+	if (GetSize() <= 1) {
+		std::cout << "List too small to rotate\n";
+		return;
+	}
+	intListNode* ptr = GetHeadPointer();
+	intListNode* endptr = ptr;
+
+
+	if (right) {
+		while (endptr->next) {
+			endptr = endptr->next;	// get last node
+		}
+
+		// move pointer right
+		for (int i = 0; i < size; i++) {
+			endptr->next = ptr;			// Set end to here
+			endptr = ptr;				// add to end of the list
+
+			ptr = ptr->next;		// Advance position
+		}
+		endptr->next = nullptr;
+		HeadNode = ptr; // set start to rotated position
+	}
+	else {
+		
+		intListNode* end;
+		// move nodes from start , to the end - input, //idk about this: but the one before, so we can set it to the end
+		for (int i = 0; i < (GetSize() - size)-1; i++) {
+			endptr = endptr->next;
+		}
+		// the node before the start is the new end
+		end = endptr;
+		endptr = endptr->next;
+		end->next = nullptr;
+		HeadNode = endptr;	// this is the new end
+
+		while (endptr->next)
+		{
+			endptr = endptr->next;
+		}
+
+		endptr->next = ptr;
+
+	}
+}
+
 // Adds 1 list to another (l1 + l2 e.g 1a,1b,1c + 2a,2b,2c = 1a,1b,1c,2a,2b,2c).
 void LinkedList::Combine(LinkedList* l2) {
 	intListNode* l1ptr = GetHeadPointer();

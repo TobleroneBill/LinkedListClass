@@ -258,16 +258,23 @@ int main() {
 	baseList->PrintList();
 
 	LinkedList* ordered = new LinkedList;
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 25; i++) {
 		ordered->Append(i);
 	}
 	//ordered->PrintList();
 	//ordered->SelectSort();
 	ordered->PrintList();
+	PrintLine();
 
-	ordered->BinarySearch(69);
-
+	//ordered->BinarySearch(69);
 	// to base 10 and back
+	ordered->Rotate(5,false);
+	ordered->PrintList();
+	PrintLine();
+	ordered->Rotate(5, true);
+	ordered->PrintList();
+	PrintLine();
+
 
 	system("pause");
 	return 0;
