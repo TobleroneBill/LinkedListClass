@@ -26,6 +26,10 @@ int LinkedList::GetSize() {
 	return LinkedList::Size;
 }
 
+int LinkedList::GetBase() {
+	return base;
+}
+
 void LinkedList::IncrementSize() {
 	LinkedList::Size++;
 }
@@ -115,6 +119,68 @@ bool LinkedList::CheckList(int value) {
 	return false;
 }
 
+
+// Cool and fun :)
+bool LinkedList::BinarySearch(int target) {
+	// Get start and end pointers
+	// Get a target int to seatch for
+	// Pointer for the Middle
+	// 
+	// LOOP:
+	// Loop to middle by for with floor(size/2)
+	// Record index, and then check if value is too high or low
+	// Make a new loop with a new middle, being += or -= half of middle size
+	// Then keep doing this until you find the value, or if the size of the loop == 1
+	// if value found, retrun true
+	// else retrurn false EZ
+
+	intListNode* start = GetHeadPointer();
+	intListNode* end = start;
+	intListNode* main = start;
+
+	// this will get swapped with main if too low, as will start
+	while (end) {
+		end = end->next;
+	}
+
+	bool checking = true;
+	int index = floor(GetSize() / 2);
+	int checks = 0;
+	while (checking) {
+		// set main to start so it can always loop up (if a value is behind a check, this needs to be able
+		// to move backwards)
+		checks++;		// diagnostics
+		main = start;
+		for (int i = 0; i < index; i++) {
+			main = main->next;
+		}
+		std::cout << main->Value << " Was found at index " << index << std::endl;
+		// If value is less than the target
+		if (main->Value < target) {
+			start = main;				// The pointer will always end at halfway
+			std::cout << "Target too low\n";
+
+		}	
+		if (main->Value > target) {
+			std::cout << "Target too high\n";
+			// too large
+			end = main;
+		}
+
+		// if target found
+		if (main->Value == target) { 
+			std::cout << "Target found in: " << checks << std::endl;
+			return true; }
+
+		// loop size = 1 if we have looped through everything and found no match
+		if (index == 1) {
+			std::cout << "Target not found in: " << checks << std::endl;
+			return false;
+		}
+		index = floor(index / 2);		// half for loop size
+	}
+}
+
 int LinkedList::ListSum() {
 	int sum = 0;
 	intListNode* ptr = GetHeadPointer();
@@ -193,7 +259,6 @@ void LinkedList::UpdateBase(int newbase) {
 			finalVal->ReverseList();	// reverse number
 			ptr->Value = finalVal->ToInt();	// turn number as list back into int
 			ptr = ptr->next;
-			base = newbase;
 			delete finalVal;
 		}
 	}
@@ -214,9 +279,11 @@ void LinkedList::UpdateBase(int newbase) {
 			}
 
 			ptr->Value = total;
+			delete numberList;
 			ptr = ptr->next;
 		}
 	}
+	base = newbase;
 }
 
 // Adds 1 list to another (l1 + l2 e.g 1a,1b,1c + 2a,2b,2c = 1a,1b,1c,2a,2b,2c).
@@ -493,7 +560,6 @@ int LinkedList::AddAsListI(int num1, int num2) {
 	return FinalInt->ToInt();
 
 }
-
 LinkedList* LinkedList::AddAsList(int num1, int num2) {
 	LinkedList* num1L = LinkedList::NumToList(num1);
 	LinkedList* num2L = LinkedList::NumToList(num2);
@@ -570,7 +636,6 @@ int LinkedList::SubtractAsListI(int num1, int num2) {
 	return FinalInt->ToInt();
 
 }
-
 LinkedList* LinkedList::SubtractAsList(int num1, int num2) {
 	LinkedList* num1L = LinkedList::NumToList(num1);
 	LinkedList* num2L = LinkedList::NumToList(num2);
@@ -647,7 +712,6 @@ int LinkedList::MultiplyAsListI(int num1, int num2) {
 	return FinalInt->ToInt();
 
 }
-
 LinkedList* LinkedList::MultiplyAsList(int num1, int num2) {
 	LinkedList* num1L = LinkedList::NumToList(num1);
 	LinkedList* num2L = LinkedList::NumToList(num2);

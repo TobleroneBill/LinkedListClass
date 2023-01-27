@@ -26,9 +26,11 @@ public:
 	// constructor
 	LinkedList();
 
+	//1 liners (getters)
 	intListNode* GetHeadPointer();
 	int GetSize();
 	void IncrementSize();
+	int GetBase();
 
 	// Add something to end of the list
 	void Append(int ListItem);
@@ -42,6 +44,13 @@ public:
 	// check list for specific value. Returns T/F for use in logic statements
 	bool CheckList(int value);
 	
+	// List has to be sorted. Checks if a value is within the sorted list using ADVANCED search features.
+	// Has some overhead, so if a tiny list, better to just use the regular CheckList method (loops through)
+	bool BinarySearch(int target);
+
+	// Move list left or right by specified amount
+	void Rotate(int size, bool right);
+
 	// Using a for loop, because that seems like easiest method to start with
 	int ListSum();
 	

@@ -235,21 +235,37 @@ int main() {
 	PrintLine();
 	addList->Combine_S(subList);
 	addList->PrintList();
-	std::cout<< "Size: " << addList->GetSize();
+	//std::cout<< "Size: " << addList->GetSize();
 	PrintLine();
 
 	//LinkedList* baseList = new LinkedList();
-	LinkedList* baseList = LinkedList::RandomList(10);
+	LinkedList* baseList = new LinkedList;// = LinkedList::RandomList(10);
 
 	baseList->Append(55);
-	PrintLine();
+	std::cout << "Current base is: " << baseList->GetBase() << std::endl;
 	baseList->PrintList();
 	PrintLine();
 	baseList->UpdateBase(2);
+	std::cout << "Current base is: " << baseList->GetBase() << std::endl;
 	baseList->PrintList();
 	PrintLine();
 	baseList->UpdateBase(10);
+	std::cout << "Current base is: " << baseList->GetBase() << std::endl;
 	baseList->PrintList();
+	PrintLine();
+	baseList->UpdateBase(8);
+	std::cout << "Current base is: " << baseList->GetBase() << std::endl;
+	baseList->PrintList();
+
+	LinkedList* ordered = new LinkedList;
+	for (int i = 0; i < 100; i++) {
+		ordered->Append(i);
+	}
+	//ordered->PrintList();
+	//ordered->SelectSort();
+	ordered->PrintList();
+
+	ordered->BinarySearch(69);
 
 	// to base 10 and back
 
