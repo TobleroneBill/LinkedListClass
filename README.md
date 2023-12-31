@@ -7,3 +7,5 @@ This is a C++ class of my own implementations of Linked Lists. These are pretty 
 Contains a class for a string list, and an int list. Wanted to use as few libraries as possible, but for the strings I felt like there was no other way than to use regex and standard string classes.
 
 There is also probably many avenues for refactoring, making it more elegant, and also Improving performance. Also unsure of how memory safe this is, so I think I will go back to that aspect at some point, becasue thats alot more important to me than getting the perfect solution (but it is quite funny to ignore imo LOLOLOL)
+
+Quick update - this was made, because I was trying to complete all the stages of this: https://adriann.github.io/programming_problems.html
